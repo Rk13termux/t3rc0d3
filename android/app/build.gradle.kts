@@ -43,29 +43,34 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
             
-            // Configuraciones adicionales para release
-            minifyEnabled = false
-            shrinkResources = false
+            // ✅ CORRECCIÓN: Sintaxis correcta para Kotlin DSL
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
         
         debug {
-            debuggable = true
+            // ✅ CORRECCIÓN: Sintaxis correcta para Kotlin DSL
+            isDebuggable = true
         }
     }
     
-    // Configuración para excluir archivos problemáticos
-    packagingOptions {
+    // ✅ CORRECCIÓN: packaging en lugar de packagingOptions para Kotlin DSL
+    packaging {
         pickFirst("**/libc++_shared.so")
         pickFirst("**/libjsc.so")
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/LICENSE")
-        exclude("META-INF/LICENSE.txt")
-        exclude("META-INF/license.txt")
-        exclude("META-INF/NOTICE")
-        exclude("META-INF/NOTICE.txt")
-        exclude("META-INF/notice.txt")
-        exclude("META-INF/ASL2.0")
-        exclude("META-INF/*.kotlin_module")
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/*.kotlin_module"
+            )
+        }
     }
 }
 
